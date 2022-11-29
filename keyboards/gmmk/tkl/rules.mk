@@ -3,6 +3,7 @@ SRC += gmmk.c
 
 # MCU name
 MCU = SN32F268F
+BOOTLOADER = sn32-dfu
 
 # Build Options
 #   comment out to disable the options.
@@ -32,4 +33,4 @@ RAW_ENABLE = yes
 USE_EXCEPTIONS_STACKSIZE = 0xE0
 USE_PROCESS_STACKSIZE = 0x1E0
 
-DEFAULT_FOLDER = gmmk/full/rev3
+DEFAULT_FOLDER = gmmk/tkl/rev2

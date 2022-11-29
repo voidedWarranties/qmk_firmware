@@ -10,14 +10,14 @@ static void flush(void)
 }
 
 void set_color(int index, uint8_t r, uint8_t g, uint8_t b) {
-    if (index >= 0 && index < DRIVER_LED_TOTAL)
+    if (index >= 0 && index < RGB_MATRIX_LED_COUNT)
     {
         _set_color(index, r, g, b);
-    }   
+    }
 }
 
 static void set_color_all(uint8_t r, uint8_t g, uint8_t b) {
-    for (int i = 0; i < DRIVER_LED_TOTAL; i++)
+    for (int i = 0; i < RGB_MATRIX_LED_COUNT; i++)
         set_color(i, r, g, b);
 }
 

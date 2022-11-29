@@ -31,9 +31,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 #ifdef KEYMAP_ISO
-    #define DRIVER_LED_TOTAL 88
+    #define RGB_MATRIX_LED_COUNT 88
 #else
-    #define DRIVER_LED_TOTAL 87
+    #define RGB_MATRIX_LED_COUNT 87
 #endif
 
 /* indicator pins */

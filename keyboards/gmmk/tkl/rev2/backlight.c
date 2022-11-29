@@ -34,7 +34,7 @@
 #define I2C_DELAY           i2c_delay(2)
 
 #ifdef USE_FRAMEBUFFER
-static RGB g_fb[DRIVER_LED_TOTAL];
+static RGB g_fb[RGB_MATRIX_LED_COUNT];
 #else
 static uint8_t sel_frame[2] = {0xFF, 0xFF};
 static uint8_t sel_frame_idx = 0;
@@ -51,7 +51,7 @@ static __inline void i2c_delay(uint32_t loop)
 }
 
 void i2c_init(void)
-{   
+{
     // drive strength all gpio A 20ma
     SN_GPIO0->MODE |= 0xFFFF0000;
 
@@ -104,12 +104,12 @@ static uint8_t i2c_writeb(uint8_t b)
 */
     /* ack bit */
     setPinInput(I2C_SDA);
-    
+
     I2C_SCL_HI;
     I2C_DELAY;
-    
+
     fail = I2C_SDA_IN;
-    
+
     I2C_SCL_LO;
     I2C_DELAY;
 
@@ -158,16 +158,16 @@ static uint8_t i2c_transaction(uint8_t i2c_addr_rw, uint8_t* i2c_data_ptr, uint8
 static uint8_t i2c_write_buf(uint8_t devid, uint8_t* data, uint8_t len)
 {
     int32_t tries = 1;
-    
+
     while ((tries-- > 0) && i2c_transaction(devid, data, len));
-    
+
     return 0;
 }
 
 static void i2c_write_reg(uint8_t devid, uint8_t reg, uint8_t data)
 {
     uint8_t i2c_data[2];
-    
+
     i2c_data[0] = reg;
     i2c_data[1] = data;
 
@@ -258,7 +258,7 @@ static void flush_led_fb(uint8_t devid, const uint8_t *map)
             uint8_t r, g, b;
             int32_t mi = map[led_idx++];
 
-            if (mi >= DRIVER_LED_TOTAL)
+            if (mi >= RGB_MATRIX_LED_COUNT)
                 r = g = b = 0;
             else {
                 r = g_fb[mi].r;
@@ -276,7 +276,7 @@ static void flush_led_fb(uint8_t devid, const uint8_t *map)
         if (i <= 1)
             block_size = 48;
         else
-            block_size = 32;            
+            block_size = 32;
 
         for (j = 0; j < block_size; j++)
             i2c_writeb(block[j]);
@@ -301,7 +301,7 @@ static void flush_led_fb(uint8_t devid, const uint8_t *map)
             uint8_t r, g, b;
             int32_t mi = map[led_idx++];
 
-            if (mi >= DRIVER_LED_TOTAL)
+            if (mi >= RGB_MATRIX_LED_COUNT)
                 r = g = b = 0;
             else {
                 r = g_fb[mi].r;
@@ -326,7 +326,7 @@ static void flush_led_fb(uint8_t devid, const uint8_t *map)
 /*
  * led index to RGB address
  */
-static const uint8_t g_led_pos[DRIVER_LED_TOTAL] = {
+static const uint8_t g_led_pos[RGB_MATRIX_LED_COUNT] = {
 /* 0*/ 0xC0,0xC1,0xC2,0xC3,0xC4,0xC5,0xC6,0xC7,0xC8,0xC9,0xCA,0xC0,0xC1,0xC2,0xC3,0xC4,
 /*16*/ 0x90,0x91,0x92,0x93,0x94,0x95,0x96,0x97,0x98,0x9C,0x9D,0x9E,0x9F,0xCA,0x90,0x91,0x92,
 /*37*/ 0x60,0x61,0x62,0x63,0x64,0x65,0x69,0x6A,0x6B,0x6C,0x6D,0x6E,0x6F,0x97,0x98,0x60,0x61,
@@ -335,13 +335,13 @@ static const uint8_t g_led_pos[DRIVER_LED_TOTAL] = {
 /*91*/ 0x03,0x04,0x05,0x07,0x09,0x0A,0x0B,0x0D,0x0E,0x0F,0x3B
 #ifdef KEYMAP_ISO
        ,0x04 /* KC_NUBS */
-#endif    
+#endif
 };
 
 /*
  * led index to chip selection table (0: E8, 1: EE)
  */
-static const uint8_t g_led_chip[DRIVER_LED_TOTAL] = {
+static const uint8_t g_led_chip[RGB_MATRIX_LED_COUNT] = {
 /* 0*/    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   0,   0,   0,   0,   0,
 /*16*/    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   0,   0,   0,   0,
 /*37*/    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   0,   0,   0,   0,
@@ -372,7 +372,7 @@ static void set_pwm(uint8_t dev, uint8_t addr, uint8_t value)
 }
 
 static void _set_color_direct(int index, uint8_t r, uint8_t g, uint8_t b)
-{   
+{
     uint8_t dev;
     int l = g_led_pos[index];
 
@@ -431,12 +431,12 @@ void process_backlight(uint8_t devid, volatile LED_TYPE *states)
 
         case 1:
         #ifdef USE_FRAMEBUFFER
-            
-        #ifdef VIA_OPENRGB_HYBRID            
+
+        #ifdef VIA_OPENRGB_HYBRID
             if (!is_orgb_mode) {
                 rgb_matrix_set_color(67, 255, 255, 255);
                 rgb_matrix_set_color(41, 255, 255, 255);
-                rgb_matrix_set_color(51, 255, 255, 255);                    
+                rgb_matrix_set_color(51, 255, 255, 255);
             }
         #endif
 

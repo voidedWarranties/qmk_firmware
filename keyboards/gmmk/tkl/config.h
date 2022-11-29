@@ -18,14 +18,6 @@
 
 #include "config_common.h"
 
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0x0C45
-#define PRODUCT_ID      0x652F
-#define DEVICE_VER      0x0001
-#define MANUFACTURER    Glorious
-#define PRODUCT         GMMK TKL
-#define DESCRIPTION     "Mechanical Keyboard"
-
 /* key matrix size */
 #define MATRIX_ROWS 7
 #define MATRIX_COLS 13
@@ -33,7 +25,6 @@
 /* key matrix pins */
 #define MATRIX_ROW_PINS { D0, D1, D2, D3, D4, D5, D6 }
 #define MATRIX_COL_PINS { C1, C2, A0, A1, A2, A3, A6, A7, A8, A9, A10, A11, A12}
-#define UNUSED_PINS
 
 #ifdef ENCODER_ENABLE
 #define ENCODERS_PAD_A { B4 }
@@ -43,7 +34,7 @@
 
 #define DIODE_DIRECTION ROW2COL
 
-/* 
+/*
  * Feature
  */
 #define USB_POLLING_INTERVAL_MS 1           /* 1000 Hz */
@@ -52,17 +43,14 @@
 #define RGB_DISABLE_WHEN_USB_SUSPENDED true /* rgb off when power off / suspend */
 // #define VIA_OPENRGB_HYBRID
 // #define USE_FRAMEBUFFER
-// #define KEYMAP_ISO 1
 /* default ripple effect */
 #ifdef RGB_MATRIX_CUSTOM_USER
 #define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_CUSTOM_RIPPLE
 #endif
 
-/* 
+/*
  * Optimization
  */
-#define NO_ACTION_MACRO
-#define NO_ACTION_FUNCTION
 #define LAYER_STATE_8BIT
 #define DYNAMIC_KEYMAP_LAYER_COUNT 4
 // #define DYNAMIC_KEYMAP_EEPROM_MAX_ADDR 1200

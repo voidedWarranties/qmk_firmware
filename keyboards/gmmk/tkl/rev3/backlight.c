@@ -17,7 +17,7 @@ extern void SPI0_Write1(uint8_t data);
 extern void SPI0_Read3(unsigned char b1, unsigned char b2, unsigned char *b3);
 
 #ifdef USE_FRAMEBUFFER
-static RGB g_fb[DRIVER_LED_TOTAL];
+static RGB g_fb[RGB_MATRIX_LED_COUNT];
 #endif
 
 #define SDB B0
@@ -32,29 +32,29 @@ void spi_init(void)
 }
 
 void spi_set_cspin(int pin)
-{   
+{
     if (g_cs_pin == pin)
         return;
 
-    writePinHigh(B2); 
-    setPinOutput(B2);    
-    writePinHigh(B1); 
+    writePinHigh(B2);
+    setPinOutput(B2);
+    writePinHigh(B1);
     setPinOutput(B1);
 
     g_cs_pin = pin;
 }
 
 void spi_read3(unsigned char b1, unsigned char b2, unsigned char *b3)
-{    
-    writePinLow(g_cs_pin);    
-    SPI0_Read3(b1, b2, b3);    
+{
+    writePinLow(g_cs_pin);
+    SPI0_Read3(b1, b2, b3);
     writePinHigh(g_cs_pin);
 }
 
 void spi_write(uint8_t *data_p, int len)
-{    
-    writePinLow(g_cs_pin);    
-    SPI0_Write(data_p, len);    
+{
+    writePinLow(g_cs_pin);
+    SPI0_Write(data_p, len);
     writePinHigh(g_cs_pin);
 }
 
@@ -83,11 +83,11 @@ void spi_r3(uint8_t page, uint8_t addr, uint8_t *data)
     spi_read3(c[0], c[1], data);
 }
 
-/* 
+/*
  * LED index to RGB address
- * >100 means it belongs to pin B1 chipselected SN2735 chip, the real addr is minus by 100 
+ * >100 means it belongs to pin B1 chipselected SN2735 chip, the real addr is minus by 100
  */
-static const uint8_t g_led_pos[DRIVER_LED_TOTAL] = {
+static const uint8_t g_led_pos[RGB_MATRIX_LED_COUNT] = {
 /* 0*/    0,   2,   3,   4,   5,   6,   7,   8,   9,  10,   11,  12,  13,  14,  15,  16,
 /*16*/  100, 101, 102, 103, 104, 105, 106, 107, 108, 109,  110, 111, 112, 113,  21,  22,  23,
 /*37*/  116, 117, 118, 119, 120, 121, 122, 123, 124, 125,  126, 127, 128, 129,  32,  33,  34,
@@ -147,7 +147,7 @@ static void flush_led_fb(int32_t pin, const uint8_t *map)
             uint8_t r, g, b;
             uint8_t mi = map[led_idx++];
 
-            if (mi >= DRIVER_LED_TOTAL)
+            if (mi >= RGB_MATRIX_LED_COUNT)
                 r = g = b = 0;
             else {
                 RGB *v = &g_fb[mi];
@@ -185,10 +185,10 @@ static void _set_color_direct(int index, uint8_t r, uint8_t g, uint8_t b)
 
     int y = l / 16;
     int a = l % 16;
-            
+
     spi_w3(1, y * 48 + a, r); // r
     spi_w3(1, y * 48 + a + 2 * 8, b); // b
-    spi_w3(1, y * 48 + a + 4 * 8, g); // g  
+    spi_w3(1, y * 48 + a + 4 * 8, g); // g
 }
 
 #endif
@@ -218,29 +218,29 @@ void _read_color(int index, uint8_t *r, uint8_t *g, uint8_t *b)
 
     int y = l / 16;
     int a = l % 16;
-            
+
     spi_r3(1, y * 48 + a, r); // r
     spi_r3(1, y * 48 + a + 2 * 8, b); // b
-    spi_r3(1, y * 48 + a + 4 * 8, g); // g  
+    spi_r3(1, y * 48 + a + 4 * 8, g); // g
 }
 
 void reset_rgb(int pin)
 {
     spi_set_cspin(pin);
-    
+
     spi_w3(3, 0, 0);
     spi_w3(3, 0x13, 0xAA);
     spi_w3(3, 0x14, 0);
     spi_w3(3, 0x15, 4);
     spi_w3(3, 0x16, 0xC0);
     spi_w3(3, 0x1A, 0);
-    
+
     // set curent
     for (int i = 0; i < 12; i++)
     {
         spi_w3(4, i, 0x80);
-    }               
-    
+    }
+
     // led all on
     for (int i = 0; i < 192/8; i++)
     {
@@ -252,7 +252,7 @@ void reset_rgb(int pin)
     {
         spi_w3(1, i, 0);
     }
-                
+
     // normal mode
     spi_w3(3, 0, 1);
 }
@@ -263,7 +263,7 @@ extern uint8_t is_orgb_mode;
 
 void process_backlight(uint8_t devid, volatile LED_TYPE* states)
 {
-    static unsigned char state = 0;       
+    static unsigned char state = 0;
 
     switch (state)
     {
@@ -290,7 +290,7 @@ void process_backlight(uint8_t devid, volatile LED_TYPE* states)
 
             flush_led_fb(B1, led_b1_map);
             flush_led_fb(B2, led_b2_map);
-        #endif        
+        #endif
             break;
 
     }
