@@ -1,10 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "rgb_matrix.h"
 
-#ifdef DEBUG_GMMK
-#include "printf.h"
-#endif
-
 #define _BL 0
 #define _FN 1
 #define _L2 2

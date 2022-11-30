@@ -1,4 +1,6 @@
 #include "quantum.h"
+
+#ifdef RGB_MATRIX_ENABLE
 #include "rgb_matrix.h"
 
 /*
@@ -10,6 +12,7 @@ void suspend_power_down_kb(void) {
 }
 
 void housekeeping_task_kb(void) { rgb_matrix_set_suspend_state(false); }
+#endif // RGB_MATRIX_ENABLE
 
 #ifdef ENCODER_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
@@ -72,17 +75,3 @@ int rand(void) {
     seed                 = seed * 1664525U + 1013904223U;
     return seed;
 }
-
-#ifdef GMMK_DEBUG
-void rgbprint(int v, uint8_t r, uint8_t g, uint8_t b) {
-    int32_t kc = 26;
-
-    if (v != 0) kc = 17 + v;
-
-    rgb_matrix_set_color(kc, r, g, b);
-}
-#endif
-
-#ifdef VIA_OPENRGB_HYBRID
-uint8_t is_orgb_mode = 1;
-#endif

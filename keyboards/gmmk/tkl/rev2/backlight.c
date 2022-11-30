@@ -430,19 +430,6 @@ void process_backlight(uint8_t devid, volatile LED_TYPE *states)
             break;
 
         case 1:
-        #ifdef USE_FRAMEBUFFER
-
-        #ifdef VIA_OPENRGB_HYBRID
-            if (!is_orgb_mode) {
-                rgb_matrix_set_color(67, 255, 255, 255);
-                rgb_matrix_set_color(41, 255, 255, 255);
-                rgb_matrix_set_color(51, 255, 255, 255);
-            }
-        #endif
-
-            flush_led_fb(0xEE, led_ee_map);
-            flush_led_fb(0xE8, led_e8_map);
-        #endif
             break;
     }
 }

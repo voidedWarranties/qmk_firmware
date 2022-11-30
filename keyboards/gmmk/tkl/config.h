@@ -41,12 +41,6 @@
 #define FORCE_NKRO                          /* default NRKO enabled */
 #define DEBOUNCE 1                          /* Debounce time in ms */
 #define RGB_DISABLE_WHEN_USB_SUSPENDED true /* rgb off when power off / suspend */
-// #define VIA_OPENRGB_HYBRID
-// #define USE_FRAMEBUFFER
-/* default ripple effect */
-#ifdef RGB_MATRIX_CUSTOM_USER
-#define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_CUSTOM_RIPPLE
-#endif
 
 /*
  * Optimization
@@ -56,8 +50,5 @@
 // #define DYNAMIC_KEYMAP_EEPROM_MAX_ADDR 1200
 #define NO_DEBUG 1
 // #define NO_PRINT 1
-#define OPENRGB_DIRECT_MODE_UNBUFFERED  /* use unbuffered direct mode in OpenRGB protocol */
 
 #include "config_led.h"
-
-// #define DEBUG_GMMK
