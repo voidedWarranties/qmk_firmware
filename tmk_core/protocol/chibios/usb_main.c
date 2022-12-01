@@ -1093,7 +1093,7 @@ void raw_hid_send(uint8_t *data, uint8_t length) {
     if (length != RAW_EPSIZE) {
         return;
     }
-    chnWrite(&drivers.raw_driver.driver, data, length);
+    chnWriteTimeout(&drivers.raw_driver.driver, data, length, TIME_IMMEDIATE);
 }
 
 __attribute__((weak)) void raw_hid_receive(uint8_t *data, uint8_t length) {
