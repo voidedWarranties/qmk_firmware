@@ -1036,34 +1036,36 @@ void send_digitizer(report_digitizer_t *report) {
  * ---------------------------------------------------------
  */
 
+/* The `timed_out` state is an approximation of the ideal `is_listener_disconnected?` state.
+ *
+ * When a 5ms timeout write has timed out, hid_listen is most likely not running, or not
+ * listening to this keyboard, so we go into the timed_out state. In this state we assume
+ * that hid_listen is most likely not gonna be connected to us any time soon, so it would
+ * be wasteful to write follow-up characters with a 5ms timeout, it would all add up and
+ * unncecessarily slow down the firmware. However instead of just dropping the characters,
+ * we write them with a TIME_IMMEDIATE timeout, which is a zero timeout,
+ * and this will succeed only if hid_listen gets connected again. When a write with
+ * TIME_IMMEDIATE timeout succeeds, we know that hid_listen is listening to us again, and
+ * we can go back to the timed_out = false state, and following writes will be executed
+ * with a 5ms timeout. The reason we don't just send all characters with the TIME_IMMEDIATE
+ * timeout is that this could cause bytes to be lost even if hid_listen is running, if there
+ * is a lot of data being sent over the console.
+ *
+ * This logic will work correctly as long as hid_listen is able to receive at least 200
+ * bytes per second. On a heavily overloaded machine that's so overloaded that it's
+ * unusable, and constantly swapping, hid_listen might have trouble receiving 200 bytes per
+ * second, so some bytes might be lost on the console.
+ */
+#define chnWriteIfListening(chan, bp, n)                                     \
+    static bool timed_out = false;                                           \
+    const sysinterval_t timeout = timed_out ? TIME_IMMEDIATE : TIME_MS2I(5); \
+    const size_t        result  = chnWriteTimeout(chan, bp, n, timeout);     \
+    timed_out                   = (result == 0);
+
 #ifdef CONSOLE_ENABLE
 
 int8_t sendchar(uint8_t c) {
-    static bool timed_out = false;
-    /* The `timed_out` state is an approximation of the ideal `is_listener_disconnected?` state.
-     *
-     * When a 5ms timeout write has timed out, hid_listen is most likely not running, or not
-     * listening to this keyboard, so we go into the timed_out state. In this state we assume
-     * that hid_listen is most likely not gonna be connected to us any time soon, so it would
-     * be wasteful to write follow-up characters with a 5ms timeout, it would all add up and
-     * unncecessarily slow down the firmware. However instead of just dropping the characters,
-     * we write them with a TIME_IMMEDIATE timeout, which is a zero timeout,
-     * and this will succeed only if hid_listen gets connected again. When a write with
-     * TIME_IMMEDIATE timeout succeeds, we know that hid_listen is listening to us again, and
-     * we can go back to the timed_out = false state, and following writes will be executed
-     * with a 5ms timeout. The reason we don't just send all characters with the TIME_IMMEDIATE
-     * timeout is that this could cause bytes to be lost even if hid_listen is running, if there
-     * is a lot of data being sent over the console.
-     *
-     * This logic will work correctly as long as hid_listen is able to receive at least 200
-     * bytes per second. On a heavily overloaded machine that's so overloaded that it's
-     * unusable, and constantly swapping, hid_listen might have trouble receiving 200 bytes per
-     * second, so some bytes might be lost on the console.
-     */
-
-    const sysinterval_t timeout = timed_out ? TIME_IMMEDIATE : TIME_MS2I(5);
-    const size_t        result  = chnWriteTimeout(&drivers.console_driver.driver, &c, 1, timeout);
-    timed_out                   = (result == 0);
+    chnWriteIfListening(&drivers.console_driver.driver, &c, 1)
     return result;
 }
 
@@ -1093,7 +1095,8 @@ void raw_hid_send(uint8_t *data, uint8_t length) {
     if (length != RAW_EPSIZE) {
         return;
     }
-    chnWriteTimeout(&drivers.raw_driver.driver, data, length, TIME_IMMEDIATE);
+
+    chnWriteIfListening(&drivers.raw_driver.driver, data, length)
 }
 
 __attribute__((weak)) void raw_hid_receive(uint8_t *data, uint8_t length) {

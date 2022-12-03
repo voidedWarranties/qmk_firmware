@@ -16,5 +16,10 @@
 
 #pragma once
 
-#define RAW_IN_CAPACITY    1
-#define RAW_OUT_CAPACITY   1
+#ifndef RAW_IN_CAPACITY
+#    define RAW_IN_CAPACITY 1
+#endif // RAW_IN_CAPACITY
+
+#ifndef RAW_OUT_CAPACITY
+#    define RAW_OUT_CAPACITY 1
+#endif // RAW_OUT_CAPACITY
