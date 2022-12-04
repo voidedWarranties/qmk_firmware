@@ -30,7 +30,7 @@ enum layers {
 
 #define LYR_NAV LT(_NAV, KC_SCLN)
 #define LYR_FKS LT(_FKEYS, KC_QUOT)
-#define LYR_SMB LT(_SYMBOL, KC_SPC)
+#define LYR_SMB MO(_SYMBOL)
 #define LYR_ADJ MO(_ADJUST)
 #define LYR_GAM TG(_GAME)
 
@@ -42,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                              KC_TAB,     KC_Q,       KC_W,       KC_E,       KC_R,       KC_T,       KC_Y,       KC_U,       KC_I,       KC_O,       KC_P,       KC_BSPC,    _______,
                              ESC_CTL,    KC_A,       KC_S,       KC_D,       KC_F,       KC_G,       KC_H,       KC_J,       KC_K,       KC_L,       LYR_NAV,    LYR_FKS,    _______,
                              KC_LSFT,    KC_Z,       KC_X,       KC_C,       KC_V,       KC_B,       KC_N,       KC_M,       KC_COMM,    KC_DOT,     KC_SLSH,    KC_RSFT,    KC_ENT,
-                             KC_LCTL,    KC_LGUI,    KC_LALT,    LYR_SMB,    KC_RALT,    LYR_ADJ,    KC_APP,     KC_RCTL,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
+                             _______,    KC_LGUI,    LYR_SMB,    KC_SPC,     KC_LALT,    LYR_ADJ,    KC_APP,     KC_RCTL,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
                              XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX),
 
     [_NAV] = LAYOUT_ansi(    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
@@ -82,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                              _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,
                              KC_ESC,     _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,
                              _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,
-                             _______,    _______,    _______,    KC_SPC,     MO(_SYMBOL),_______,    _______,    _______,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
+                             KC_LCTL,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
                              XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX),
 
     /*
@@ -168,8 +168,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    uint8_t highest_layer = get_highest_layer(state);
-    protocol_send(KSK_LAYER, 0, &highest_layer, 1);
-
+    protocol_send(KSK_LAYER, 0, &state, 1);
     return state;
 }
