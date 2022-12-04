@@ -9,6 +9,7 @@
 enum layers {
     _BASE,
     _SYMBOL,
+    _GAME,
     _FKEYS,
     _ADJUST,
     _NAV,
@@ -31,6 +32,7 @@ enum layers {
 #define LYR_FKS LT(_FKEYS, KC_QUOT)
 #define LYR_SMB LT(_SYMBOL, KC_SPC)
 #define LYR_ADJ MO(_ADJUST)
+#define LYR_GAM TG(_GAME)
 
 #define ESC_CTL MT(MOD_LCTL, KC_ESC)
 
@@ -72,7 +74,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                              _______,    RGB_TOG,    RGB_HUD,    RGB_HUI,    RGB_SAD,    RGB_SAI,    RGB_VAD,    RGB_VAI,    _______,    _______,    _______,    _______,    _______,
                              _______,    RGB_SPD,    RGB_SPI,    RGB_RMOD,   RGB_MOD,    _______,    _______,    _______,    KC_BRID,    KC_BRIU,    KC_SCLN,    KC_QUOT,    _______,
                              _______,    KC_MPRV,    KC_MPLY,    KC_MSTP,    KC_MNXT,    _______,    KC_MUTE,    KC_VOLD,    KC_VOLU,    _______,    _______,    _______,    _______,
-                             _______,    _______,    _______,    KC_SPC,     _______,    _______,    _______,    _______,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
+                             _______,    LYR_GAM,    _______,    KC_SPC,     _______,    _______,    _______,    _______,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
+                             XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX),
+
+    [_GAME] = LAYOUT_ansi(   XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
+                             XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
+                             _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,
+                             KC_ESC,     _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,
+                             _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,
+                             _______,    _______,    _______,    KC_SPC,     MO(_SYMBOL),_______,    _______,    _______,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
                              XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX),
 
     /*
