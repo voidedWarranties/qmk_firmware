@@ -7,6 +7,7 @@
 
 #include "raw_hid.h"
 #include "usb_descriptor.h"
+#include "action_layer.h"
 
 void protocol_send(ksk_op op, uint8_t header_data, uint8_t *data, uint8_t length) {
     uint8_t buf[RAW_EPSIZE];
@@ -38,6 +39,15 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
                     uint8_t idx_start = body_start + i * 4;
                     set_color(data[idx_start], data[idx_start + 1], data[idx_start + 2], data[idx_start + 3]);
                 }
+            }
+
+            break;
+
+        case KSK_LAYER:
+            if (header_data == 0) {
+                layer_off(data[body_start]);
+            } else {
+                layer_on(data[body_start]);
             }
 
             break;
