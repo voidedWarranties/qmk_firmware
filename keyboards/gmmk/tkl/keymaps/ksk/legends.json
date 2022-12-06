@@ -219,7 +219,7 @@
                 { "usage": "mouse", "label": "wh\nleft" },
                 { "usage": "mouse", "label": "ms\nup" },
                 { "usage": "mouse", "label": "wh\nright" },
-                { "label": "delete" },
+                { "label": "del" },
                 { "label": "insert" },
                 { "usage": "passthrough" }
             ],
@@ -349,7 +349,7 @@
                 { "usage": "function", "label": "back" },
                 { "usage": "function", "label": "fwd" },
                 { "usage": "passthrough" },
-                { "usage": "function", "label": "reload" },
+                { "usage": "function", "label": "refr" },
                 { "usage": "function", "label": "new tab" },
                 { "usage": "function", "label": "copy" },
                 { "usage": "function", "label": "undo tab" },
