@@ -58,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                              _______,    KC_F1,      KC_F2,      KC_F3,      KC_F4,      KC_ACL0,    KC_ACL1,    KC_WH_L,    KC_MS_U,    KC_WH_R,    KC_DEL,     KC_INS,     _______,
                              _______,    KC_F5,      KC_F6,      KC_F7,      KC_F8,      KC_ACL2,    KC_WH_D,    KC_MS_L,    KC_MS_D,    KC_MS_R,    KC_WH_U,    _______,    _______,
                              _______,    KC_F9,      KC_F10,     KC_F11,     KC_F12,     KC_F13,     KC_F14,     KC_F15,     KC_F16,     KC_BTN3,    _______,    _______,    KC_PSCR,
-                             _______,    _______,    _______,    KC_BTN1,    KC_BTN2,    _______,    _______,    _______,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
+                             _______,    _______,    KC_LALT,    KC_BTN1,    KC_BTN2,    _______,    _______,    _______,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
                              XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX),
 
     [_SYMBOL] = LAYOUT_ansi( XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
@@ -74,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                              _______,    RGB_TOG,    RGB_HUD,    RGB_HUI,    RGB_SAD,    RGB_SAI,    RGB_VAD,    RGB_VAI,    _______,    _______,    _______,    _______,    _______,
                              _______,    RGB_SPD,    RGB_SPI,    RGB_RMOD,   RGB_MOD,    _______,    _______,    _______,    KC_BRID,    KC_BRIU,    KC_SCLN,    KC_QUOT,    _______,
                              _______,    KC_MPRV,    KC_MPLY,    KC_MSTP,    KC_MNXT,    _______,    KC_MUTE,    KC_VOLD,    KC_VOLU,    _______,    _______,    _______,    _______,
-                             _______,    LYR_GAM,    _______,    KC_SPC,     _______,    _______,    _______,    _______,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
+                             _______,    LYR_GAM,    _______,    _______,    _______,    _______,    _______,    _______,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
                              XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX),
 
     [_GAME] = LAYOUT_ansi(   XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
