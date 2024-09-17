@@ -15,19 +15,6 @@ enum layers {
     _NAV,
 };
 
-#define TAB_PRV C(S(KC_TAB))
-#define TAB_NXT C(KC_TAB)
-#define TAB_CLS C(KC_W)
-#define TAB_UND C(S(KC_T))
-#define TAB_NEW C(KC_T)
-#define TAB_RLD C(KC_R)
-#define TAB_BCK A(KC_LEFT)
-#define TAB_FWD A(KC_RIGHT)
-
-#define COPY C(KC_C)
-#define PASTE C(KC_V)
-#define CUT C(KC_X)
-
 #define LYR_NAV LT(_NAV, KC_SCLN)
 #define LYR_FKS LT(_FKEYS, KC_QUOT)
 #define LYR_SMB MO(_SYMBOL)
@@ -47,9 +34,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_NAV] = LAYOUT_ansi(    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
                              XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
-                             _______,    TAB_BCK,    TAB_FWD,    _______,    TAB_RLD,    TAB_NEW,    COPY,       TAB_UND,    KC_PGDN,    KC_PGUP,    PASTE,      _______,    _______,
-                             _______,    TAB_PRV,    TAB_NXT,    TAB_CLS,    _______,    _______,    KC_LEFT,    KC_DOWN,    KC_UP,      KC_RGHT,    _______,    _______,    _______,
-                             _______,    _______,    CUT,        _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,
+                             _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    KC_PGDN,    KC_PGUP,    _______,      _______,    _______,
+                             _______,    _______,    _______,    _______,    _______,    _______,    KC_LEFT,    KC_DOWN,    KC_UP,      KC_RGHT,    _______,    _______,    _______,
+                             _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,
                              _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
                              XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX),
 
